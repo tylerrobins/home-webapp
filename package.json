@@ -4,18 +4,24 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"i": "yarn i:server && yarn i:client",
+		"i:server": "yarn install",
+		"i:client": "cd client && yarn install",
+		"setup": "yarn i && yarn build:client",
+		"dev": "concurrently -n \"TS,NM\" -c \"bgCyan,bgGreen\" \"yarn watch\" \"yarn dev:server\"",
+		"dev:server": "nodemon server/index.js",
+		"dev:tsc-server": "nodemon --exec ts-node src/index.ts",
 		"watch": "tsc -w",
 		"start": "node server/index.js",
-		"dev": "nodemon server/index.js",
-		"start2": "ts-node src/index.ts",
-		"dev2": "nodemon --exec ts-node src/index.ts",
-		"create:migration": "mikro-orm migration:create"
+		"start:tsc": "ts-node src/index.ts",
+		"build:client": "cd client && yarn build"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
 		"body-parser": "^1.20.2",
+		"concurrently": "^8.2.2",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",
 		"express": "^4.19.2"
