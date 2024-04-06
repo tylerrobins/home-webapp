@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import user from './users/users.route'
+import user from './user/user.route'
 
 const router = Router();
 
@@ -11,6 +11,6 @@ router.get('/v1', (req, res) => {
 });
 
 // routes registration
-router.use('/users', user);
+router.use('/user', user);
 
 export default router
