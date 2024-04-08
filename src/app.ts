@@ -2,6 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import dotenv from 'dotenv';
+import RedisStore from "connect-redis"
+import session from "express-session"
+import {createClient} from "redis"
 
 import api from './api'
 import { notFound, errorHandler } from './middleware/errors.middleware';
@@ -9,6 +12,32 @@ import { notFound, errorHandler } from './middleware/errors.middleware';
 dotenv.config();
 
 const app = express();
+
+
+// Initialize client.
+// const redisClient = createClient()
+// redisClient.connect().catch(console.error)
+
+// // Initialize store.
+// let redisStore = new RedisStore({
+//   client: redisClient,
+//   prefix: "homewebapp:",
+// })
+
+// // Initialize session storage.
+// app.use(
+//   session({
+//     store: redisStore,
+//     resave: false, // required: force lightweight session keep alive (touch)
+//     saveUninitialized: false, // recommended: only save session when data exists
+//     secret: "keyboard cat",
+//   }),
+// )
+
+// app.use(express.json())
+app.use(express.urlencoded({extended:true}));
+app.use(express.json());
+app.use(cors());
 
 app.use('/api', api);
 
@@ -19,10 +48,6 @@ if (process.env.NODE_ENV == 'production') {
 		res.sendFile(path.resolve(__dirname, '..','client', 'dist', 'index.html'));
 	});
 }
-
-app.use(express.urlencoded({extended:true}));
-app.use(express.json());
-app.use(cors());
 
 app.get('/', (req, res) => {
 	res.status(200).json({
