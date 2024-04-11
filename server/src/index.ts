@@ -4,7 +4,6 @@ import app from './app'
 
 const port = process.env.PORT || 8000;
 
-
 const main = async () => {
 	const db = await AppDataSource.initialize()
 		.then(() => {

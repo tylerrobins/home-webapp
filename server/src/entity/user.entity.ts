@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, ManyToOne } from "typeorm"
+import Home from './home.entity'
 
 @Entity()
 export default class User {
@@ -19,6 +20,9 @@ export default class User {
 
     @Column("timestamp", { default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
     updatedAt!: Date;
+
+    @ManyToOne(() => Home, (home) => home.members)
+    home: Home
 
     @BeforeInsert()
     updateCreatedAt() {

@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "es6",
 		"module": "commonjs",
-		"outDir": "./server",
+		"outDir": "./backend",
 		"esModuleInterop": true,
 		"strictNullChecks": true,
 		"strictFunctionTypes": true,
@@ -12,8 +12,8 @@
 		"experimentalDecorators": true,
 		"lib": ["es5", "es6"],
 		"moduleResolution": "node",
-		"sourceMap": true
+		"sourceMap": true,
 	},
-	"include": ["src/**/*.ts", "next-env.d.ts"],
+	"include": ["src/**/*.ts", "custom.d.ts"],
 	"exclude": ["node_modules"]
 }

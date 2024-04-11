@@ -13,28 +13,29 @@ dotenv.config();
 
 const app = express();
 
-
 // Initialize client.
-// const redisClient = createClient()
-// redisClient.connect().catch(console.error)
+const redisClient = createClient()
+redisClient.connect().catch(console.error)
 
 // // Initialize store.
-// let redisStore = new RedisStore({
-//   client: redisClient,
-//   prefix: "homewebapp:",
-// })
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "homewebapp:",
+})
 
 // // Initialize session storage.
-// app.use(
-//   session({
-//     store: redisStore,
-//     resave: false, // required: force lightweight session keep alive (touch)
-//     saveUninitialized: false, // recommended: only save session when data exists
-//     secret: "keyboard cat",
-//   }),
-// )
+app.use(
+  session({
+	name: 'haid',
+    store: redisStore,
+    resave: false, // required: force lightweight session keep alive (touch)
+    saveUninitialized: false, // recommended: only save session when data exists
+    secret: "keyboard cat",
+  }),
+)
 
-// app.use(express.json())
+const frontendPath = path.resolve(__dirname, '..', 'frontend')
+
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
@@ -43,9 +44,9 @@ app.use('/api', api);
 
 console.log('Environment', process.env.NODE_ENV)
 if (process.env.NODE_ENV == 'production') {
-	app.use(express.static('client/dist'));
+	app.use(express.static(frontendPath));
 	app.get('*', (req, res) => {
-		res.sendFile(path.resolve(__dirname, '..','client', 'dist', 'index.html'));
+		res.sendFile(path.resolve(frontendPath,'index.html'));
 	});
 }
 
